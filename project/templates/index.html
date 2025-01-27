@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block title %}DailyBoard{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <!-- Page Header -->
+    <div class="container mt-4">
+        <!-- Current Time -->
+        <div id="current-time" class="text-right" style="position: absolute; top: 100px; right: 20px; font-size: 2.5rem; font-weight: bold;">
+            <!-- Time will display here -->
+        </div>
+
+    <div class="text-center mb-4">
+        <h1 class="display-4">Hello, {{ username }}</h1>
+        <p class="custom-quote">{{ quote.text }} - <em>{{ quote.author }}</em></p>
+    </div>
+
+    <!-- Goal Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg rounded-lg border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-4" style="font-size: 1.75rem; font-weight: 600;">Your Goal</h5>
+                    <p class="text-muted mb-4" style="font-size: 1.25rem;">{{ current_goal }}</p>
+                    {% if current_goal == "No goal set yet." %}
+                        <a href="{{ url_for('set_goal') }}" class="btn btn-primary btn-lg px-4 py-2">Set a Goal</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today's Events and To-Do List Section -->
+    <div class="row mt-5">
+        <div class="col-md-8">
+            <h5 class="text-center mb-3">Today's Events</h5>
+            {% if events %}
+                <div class="d-flex flex-wrap justify-content-center">
+                    {% for event in events %}
+                        <div class="card shadow-sm mx-2 mb-3" style="min-width: 200px; max-width: 250px;">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ event.summary }}</h6>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        {{ event.start_time }}<br>
+                                        {{ event.end_time }}
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-muted">No events scheduled for today.</p>
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">To-Do List</h5>
+                    <form method="POST" action="/">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="task" placeholder="Enter a task" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Add Task</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <ul class="task-list">
+                        {% for task in tasks %}
+                            <li>
+                                <input type="checkbox" id="task_{{ loop.index }}" class="task-checkbox">
+                                <label for="task_{{ loop.index }}">{{ task }}</label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateTime() {
+        const timeContainer = document.getElementById('current-time');
+        const now = new Date();
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        const formattedTime = now.toLocaleTimeString('en-US', options);
+        timeContainer.textContent = formattedTime;
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+</script>
+{% endblock %}

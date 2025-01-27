@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <!-- Bootstrap CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Favicon -->
+    <link href="/static/favicon.ico" rel="icon">
+
+    <!-- Custom Styles -->
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+
+    <title>{% block title %}DailyBoard{% endblock %}</title>
+
+    <style>
+        body {
+            background-color: black; /* Black background for the whole page */
+            color: white; /* White text for contrast */
+        }
+        /* Navbar Styling */
+        nav {
+            border-radius: 15px; /* Rounded corners */
+            background-color: #343a40; /* Dark background color */
+        }
+
+        .navbar-nav .nav-item .nav-link {
+            border-radius: 10px; /* Rounded buttons */
+            margin: 5px; /* Space between buttons */
+            padding: 8px 16px; /* Button size */
+            color: #fff; /* White text */
+            background-color: #007bff; /* Default button color */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Different button colors */
+        .navbar-nav .nav-item .nav-link:nth-child(1) {
+            background-color: #28a745; /* Green */
+        }
+
+        .navbar-nav .nav-item .nav-link:nth-child(2) {
+            background-color: #17a2b8; /* Teal */
+        }
+
+        .navbar-nav .nav-item .nav-link:nth-child(3) {
+            background-color: #ffc107; /* Yellow */
+        }
+
+        .navbar-nav .nav-item .nav-link:nth-child(4) {
+            background-color: #dc3545; /* Red */
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            transform: scale(1.1); /* Slightly larger on hover */
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .navbar-brand {
+            color: #fff !important; /* White brand text */
+            font-size: 1.5em;
+        }
+
+        .navbar-light .navbar-toggler-icon {
+            background-color: #fff; /* White hamburger icon */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-md navbar-light mx-3 my-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">DailyBoard</a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if session.get("user_id") %}
+                    <ul class="navbar-nav me-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/goals">Goals</a></li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ms-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container py-5">
+        {% block main %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="mb-5 text-center">
+        <p>&copy; {{ current_year }} My Flask App. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+

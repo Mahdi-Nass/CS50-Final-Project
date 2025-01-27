@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote of the Day
+{% endblock %}
+
+{% block main %}
+    <div class="text-center">
+        <h1 class="mb-4">Quote of the Day</h1>
+        <blockquote class="blockquote text-center">
+            <p class="mb-3" style="font-size: 1.5rem; font-style: italic;">
+                "{{ quote.text }}"
+            </p>
+            <footer class="blockquote-footer mt-3" style="font-size: 1rem;">
+                {{ quote.author if quote.author != "Unknown" else "Anonymous" }}
+            </footer>
+        </blockquote>
+    </div>
+{% endblock %}

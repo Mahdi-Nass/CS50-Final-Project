@@ -1,0 +1,49 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+.custom-quote {
+    font-size: 1.5rem;  
+    font-weight: bold;
+    color: white;  
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Remove bullet points by targeting ::marker pseudo-element */
+ul.task-list {
+    list-style: none !important;  /* Remove bullet points */
+    padding-left: 0 !important;   /* Remove padding */
+    margin: 0 !important;         /* Remove margin */
+}
+
+/* Target the ::marker pseudo-element to remove bullet points */
+ul.task-list li::marker {
+    content: none !important; /* Remove bullet point */
+}
+
+/* Ensure list items also have no default styling */
+ul.task-list li {
+    margin-bottom: 10px;          /* Spacing between tasks */
+    display: flex;                /* Align items horizontally */
+    align-items: center;          /* Center the checkbox and label */
+}
+
+/* Styling for checkboxes */
+.task-checkbox {
+    margin-right: 10px;           /* Space between checkbox and text */
+    cursor: pointer;              /* Change cursor on hover */
+    transform: scale(1.2);        /* Optional: Make checkboxes slightly larger */
+}
+
+/* Styling for labels */
+.task-list li label {
+    font-size: 1.1rem;            /* Adjust font size for better readability */
+    cursor: pointer;             /* Change cursor on hover */
+}
+
+.card-title {
+    font-size: 1.75rem;
+}
+

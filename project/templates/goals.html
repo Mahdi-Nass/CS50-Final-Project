@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Set Your Goal
+{% endblock %}
+
+{% block main %}
+    <div class="text-center">
+        <h2>Your Current Goal:</h2>
+        {% if current_goal %}
+            <p>{{ current_goal }}</p>
+        {% else %}
+            <p>You have not set a goal yet.</p>
+        {% endif %}
+
+        <form action="/goals" method="post">
+            <div class="mb-3">
+                <textarea class="form-control mx-auto w-auto" name="goal" placeholder="Enter new goal here..." rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Save Goal</button>
+        </form>
+    </div>
+{% endblock %}
